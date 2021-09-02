@@ -49,6 +49,7 @@ class App extends Component{ // Component를 상속 받겠다
 
   
   render(){ // 상속 받은 Component안의 render라는 메소드를 사용한다
+    // render 안에서 this는 컴포넌트 자신을 가리킨다
     console.log('App render')
     var _title, _desc = null;
     if (this.state.mode === 'welcome'){
@@ -68,7 +69,9 @@ class App extends Component{ // Component를 상속 받겠다
         <header>
           <h1><a href="/" onClick={function(e){
             // alert('hi'); 
+            console.log('event in', this); // .bind(this)가 없는 경우 event in undefined
             e.preventDefault(); // a 태그의 기본적인 동작 방법을 중지 시킨다.
+            return;
             console.log(e);
             // this.state.mode = 'welcome'; // 2가지 문제가 있음 
             this.setState({
@@ -78,7 +81,8 @@ class App extends Component{ // Component를 상속 받겠다
             // this를 찾을수 없어서 발생한 에러에 대한서는 함수가 끝나는 뒷 부분에 .bind(this)
             // bind를 해도 페이지에 변화가 없음 react는 state값이 바뀐줄 모름 때문에 setState
             // debugger;
-          }.bind(this)}>{this.state.subject.title}</a></h1>
+          // }.bind(this)}>{this.state.subject.title}</a></h1>
+          }}>{this.state.subject.title}</a></h1>
           {this.state.subject.sub}
         </header>
         <TOC data={this.state.contents}></TOC>
