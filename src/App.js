@@ -70,8 +70,15 @@ class App extends Component{ // Component를 상속 받겠다
             // alert('hi'); 
             e.preventDefault(); // a 태그의 기본적인 동작 방법을 중지 시킨다.
             console.log(e);
+            // this.state.mode = 'welcome'; // 2가지 문제가 있음 
+            this.setState({
+              mode : 'welcome'
+            });
+            // this는 컴포넌트 자기자신이 아니라 아무것도 셋팅되지 않은 값
+            // this를 찾을수 없어서 발생한 에러에 대한서는 함수가 끝나는 뒷 부분에 .bind(this)
+            // bind를 해도 페이지에 변화가 없음 react는 state값이 바뀐줄 모름 때문에 setState
             // debugger;
-          }}>{this.state.subject.title}</a></h1>
+          }.bind(this)}>{this.state.subject.title}</a></h1>
           {this.state.subject.sub}
         </header>
         <TOC data={this.state.contents}></TOC>
