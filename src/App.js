@@ -66,8 +66,11 @@ class App extends Component{ // Component를 상속 받겠다
           sub={this.state.subject.sub}>
         </Subject> */}
         <header>
-          <h1><a href="/" onClick={function(){
-            alert('hi'); 
+          <h1><a href="/" onClick={function(e){
+            // alert('hi'); 
+            e.preventDefault(); // a 태그의 기본적인 동작 방법을 중지 시킨다.
+            console.log(e);
+            // debugger;
           }}>{this.state.subject.title}</a></h1>
           {this.state.subject.sub}
         </header>
