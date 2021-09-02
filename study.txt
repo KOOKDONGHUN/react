@@ -1,0 +1,4 @@
+public 이라는 폴더는 웹에서 경로를 통해서 접근할 수 있는 html이 들어있는 폴더
+src폴더의 .js는 public의 html들에서 사용하는 컴포넌트(사용자 지정 태그)를 정의? 해놓는 곳 
+
+jsx + react-create-app = js
