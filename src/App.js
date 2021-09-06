@@ -62,16 +62,23 @@ class App extends Component{ // Component를 상속 받겠다
     }
     return (
       <div className="App">
-        {/* <Subject
+        <Subject
           title={this.state.subject.title}
-          sub={this.state.subject.sub}>
-        </Subject> */}
-        <header>
+          sub={this.state.subject.sub}
+          onChangePage={function(){
+            alert('hihihi');
+            this.setState({
+              mode : 'welcome'
+            });
+          }.bind(this)}
+        >
+        </Subject>
+        {/* <header>
           <h1><a href="/" onClick={function(e){
             // alert('hi'); 
             console.log('event in', this); // .bind(this)가 없는 경우 event in undefined
             e.preventDefault(); // a 태그의 기본적인 동작 방법을 중지 시킨다.
-            return;
+            // return;
             console.log(e);
             // this.state.mode = 'welcome'; // 2가지 문제가 있음 
             this.setState({
@@ -82,9 +89,9 @@ class App extends Component{ // Component를 상속 받겠다
             // bind를 해도 페이지에 변화가 없음 react는 state값이 바뀐줄 모름 때문에 setState
             // debugger;
           // }.bind(this)}>{this.state.subject.title}</a></h1>
-          }}>{this.state.subject.title}</a></h1>
+          }.bind(this)}>{this.state.subject.title}</a></h1>
           {this.state.subject.sub}
-        </header>
+        </header> */}
         <TOC data={this.state.contents}></TOC>
         <Content title={_title} desc={_desc}></Content>
       </div>
