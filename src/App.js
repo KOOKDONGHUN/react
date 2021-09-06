@@ -37,11 +37,12 @@ class App extends Component{ // Component를 상속 받겠다
     super(props);
     this.state = {
       mode:'read',
+      selected_content_id:2,
       subject:{title:'WEB', sub:'World Wide Web!'},
       welcome : {title : 'Welcome', desc:'Hello, React!!'},
       contents:[
         {id : 1, title : 'HTML', desc : 'HyperText ...'},
-        {id : 2, title : 'CSS', desc : 'defign'},
+        {id : 2, title : 'CSS', desc : 'design'},
         {id : 3, title : 'JavaScript', desc : 'JavaScript is for interactive'},
       ]
     }
@@ -57,8 +58,16 @@ class App extends Component{ // Component를 상속 받겠다
       _desc = this.state.welcome.desc;
     }
     else if (this.state.mode === 'read') {
-      _title = this.state. contents[0].title;
-      _desc = this.state. contents[0].desc;
+      var i = 0;
+      while ( i < this.state.contents.length){
+        var data = this.state.contents[i];
+        if (data.id === this.state.selected_content_id) {
+          _title = data.title;
+          _desc = data.desc;
+          break;
+        }
+        i = i+ 1;
+      }
     }
     return (
       <div className="App">
@@ -66,7 +75,7 @@ class App extends Component{ // Component를 상속 받겠다
           title={this.state.subject.title}
           sub={this.state.subject.sub}
           onChangePage={function(){
-            alert('hihihi');
+            // alert('hihihi');
             this.setState({
               mode : 'welcome'
             });
@@ -92,7 +101,17 @@ class App extends Component{ // Component를 상속 받겠다
           }.bind(this)}>{this.state.subject.title}</a></h1>
           {this.state.subject.sub}
         </header> */}
-        <TOC data={this.state.contents}></TOC>
+        <TOC onChangePage={
+          function(id){
+            // alert('hihihi')
+            // debugger;
+            console.log(id);
+            this.setState({
+              mode : 'read',
+              selected_content_id : Number(id)
+            });
+          }.bind(this)
+        } data={this.state.contents}></TOC>
         <Content title={_title} desc={_desc}></Content>
       </div>
     )
