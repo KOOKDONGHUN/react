@@ -27,16 +27,20 @@ import './App.css';
 import React,{ Component } from 'react'; // react가 가지고 있는 Component라는 클래스를 사용하겠다
 
 import TOC from "./components/TOC"
-import Content from "./components/Content"
+import ReadContent from "./components/ReadContent"
+import CreateContent from "./components/CreateContent"
 import Subject from "./components/Subject"
+import Control from "./components/Control"
 
 class App extends Component{ // Component를 상속 받겠다
   constructor(props){ // 스테이트의 값을 초기화 하고자 한다. 초기의 값으로 render함수안에 존재하는 컴포넌트의 props를 설정하고자 한다.
     // 컴포넌트가 호출?실행? 될때 render 보다 먼저 호출이 돼서 변수들을 초기화 해야하는 경우 여기에 작성
     // 외부에 공개가 되지 않아야 할 것들은 this.state안에 정의 하도록 한다 (정보은닉)
     super(props);
+    // state에 안넣는 이유는 UI 영향을 주는게 아니기 때문에 굳이 넣을 필요없음 (불필요한 렌더링 방지)
+    this.max_content_id = 3;
     this.state = {
-      mode:'read',
+      mode:'create',
       selected_content_id:2,
       subject:{title:'WEB', sub:'World Wide Web!'},
       welcome : {title : 'Welcome', desc:'Hello, React!!'},
@@ -52,10 +56,11 @@ class App extends Component{ // Component를 상속 받겠다
   render(){ // 상속 받은 Component안의 render라는 메소드를 사용한다
     // render 안에서 this는 컴포넌트 자신을 가리킨다
     console.log('App render')
-    var _title, _desc = null;
+    var _title, _desc, _article = null;
     if (this.state.mode === 'welcome'){
       _title = this.state.welcome.title;
       _desc = this.state.welcome.desc;
+      _article = <ReadContent title={_title} desc={_desc}></ReadContent>
     }
     else if (this.state.mode === 'read') {
       var i = 0;
@@ -68,6 +73,21 @@ class App extends Component{ // Component를 상속 받겠다
         }
         i = i+ 1;
       }
+      _article = <ReadContent title={_title} desc={_desc}></ReadContent>
+    }
+    else if (this.state.mode === 'create') {
+      _article = <CreateContent onSubmit={function(_title, _desc){
+        // add content to this.state.contents
+        console.log(_title, _desc);
+        this.max_content_id += 1;
+        // 이렇게만 하면 리액트가 바꾼줄 모름 
+        this.state.contents.push(
+          {id:this.max_content_id, title:_title, desc: _desc}
+        );
+        this.setState(
+          {contents : this.state.contents}
+        );
+      }.bind(this)}></CreateContent>
     }
     return (
       <div className="App">
@@ -112,7 +132,13 @@ class App extends Component{ // Component를 상속 받겠다
             });
           }.bind(this)
         } data={this.state.contents}></TOC>
-        <Content title={_title} desc={_desc}></Content>
+        <Control onChangeMode={function(_mode){
+          this.setState({
+            mode:_mode
+          })
+        }.bind(this)}></Control>
+        {/* <ReadContent title={_title} desc={_desc}></ReadContent> */}
+        {_article}
       </div>
     )
   }

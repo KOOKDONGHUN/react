@@ -1,6 +1,6 @@
 import React,{ Component } from 'react'; // react가 가지고 있는 Component라는 클래스를 사용하겠다
 
-class Content extends Component {
+class ReadContent extends Component {
     render() {
       return (
         <article>
@@ -11,4 +11,4 @@ class Content extends Component {
     }
   }
 
-  export default Content
+  export default ReadContent
